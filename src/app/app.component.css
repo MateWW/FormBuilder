@@ -1,0 +1,32 @@
+
+.container{
+  margin-top: 60px;
+  font-family: Roboto, sans-serif;
+}
+
+h1{
+  font-size: 48px;
+  font-weight: 500;
+  font-family: Roboto, sans-serif;
+}
+
+nav{
+  display: flex;
+  border-bottom: 1px solid #333333;
+}
+
+a{
+  text-decoration: none;
+}
+
+a .nav_item{
+  padding: 10px 20px;
+  margin: 0;
+  color:#555555;
+  text-decoration: none;
+}
+
+.nav_item-active .nav_item {
+  background: #555555;
+  color:#FFFFFF;
+}
