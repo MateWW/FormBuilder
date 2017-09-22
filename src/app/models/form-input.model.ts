@@ -59,7 +59,7 @@ export class FormInputModel {
       tempChildrenJson.push(child.getJSON());
     });
     return {
-      condition: Object.assign({}, this.condition),
+      condition: this.condition ? Object.assign({}, this.condition) : null,
       question: this.question,
       type: this.type,
       children: tempChildrenJson

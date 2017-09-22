@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormBuilderComponent } from './form-builder.component';
+import {FormsModule} from '@angular/forms';
 
 describe('FormBuilderComponent', () => {
   let component: FormBuilderComponent;
@@ -8,6 +9,9 @@ describe('FormBuilderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        FormsModule
+      ],
       declarations: [ FormBuilderComponent ]
     })
     .compileComponents();
