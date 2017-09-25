@@ -3,8 +3,9 @@ import {TestBed, inject, fakeAsync, tick} from '@angular/core/testing';
 import {FormLoaderService} from './form-loader.service';
 import {FormInputModel} from '../models/form-input.model';
 import {SavedFormMock} from '../shared/mocks/saved-form.mock';
+import {SavedFormInterface} from '../interfaces/saved-form.interface';
 
-fdescribe('FormLoaderService', () => {
+describe('FormLoaderService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,8 +24,8 @@ fdescribe('FormLoaderService', () => {
   it('should load and get test form', fakeAsync(inject([FormLoaderService], (service: FormLoaderService) => {
     localStorage.setItem('FB_test', JSON.stringify(SavedFormMock));
     service.loadForm('FB_test');
-    service.getForm().subscribe((form: FormInputModel[]) => {
-      expect(form.length).toBe(1);
+    service.getForm().subscribe((form: SavedFormInterface) => {
+      expect(form.formModels.length).toBe(1);
       expect(form[0].getType()).toBe('boolean');
       expect(form[0].getChildren().length).toBe(2);
     });
@@ -35,6 +36,12 @@ fdescribe('FormLoaderService', () => {
     expect(service.loadForm('FB_test')).toBeFalsy();
   }));
 
+  it('should try to load empty storage', inject([FormLoaderService], (service: FormLoaderService) => {
+    service.getFormList().subscribe((list: string[]) => {
+      expect(list.length).toBe(0);
+    });
+    expect(service).toBeTruthy();
+  }));
 
   it('should return list of forms', inject([FormLoaderService], (service: FormLoaderService) => {
     localStorage.setItem('FB_test1', JSON.stringify(SavedFormMock));
@@ -50,8 +57,8 @@ fdescribe('FormLoaderService', () => {
 
   it('should create form', fakeAsync(inject([FormLoaderService], (service: FormLoaderService) => {
     expect(service.createForm('test')).toBeTruthy();
-    service.getForm().subscribe((form: FormInputModel[]) => {
-      expect(form.length).toBe(0);
+    service.getForm().subscribe((form: SavedFormInterface) => {
+      expect(form.formModels.length).toBe(0);
       expect(localStorage.getItem('FB_test')).toBeDefined();
     });
     tick();
@@ -60,8 +67,8 @@ fdescribe('FormLoaderService', () => {
   it('should try overwrite existing form', fakeAsync(inject([FormLoaderService], (service: FormLoaderService) => {
     localStorage.setItem('FB_test', JSON.stringify(SavedFormMock));
     expect(service.createForm('test')).toBeFalsy();
-    service.getForm().subscribe((form: FormInputModel[]) => {
-      expect(form.length).toBe(1);
+    service.getForm().subscribe((form: SavedFormInterface) => {
+      expect(form.formModels.length).toBe(1);
       expect(localStorage.getItem('FB_test')).toBeDefined();
     });
     tick();
@@ -70,8 +77,8 @@ fdescribe('FormLoaderService', () => {
   it('should constrain overwrite existing form', fakeAsync(inject([FormLoaderService], (service: FormLoaderService) => {
     localStorage.setItem('FB_test', JSON.stringify(SavedFormMock));
     expect(service.createForm('test', true)).toBeTruthy();
-    service.getForm().subscribe((form: FormInputModel[]) => {
-      expect(form.length).toBe(0);
+    service.getForm().subscribe((form: SavedFormInterface) => {
+      expect(form.formModels.length).toBe(0);
       expect(localStorage.getItem('FB_test')).toBeDefined();
     });
     tick();
@@ -80,14 +87,14 @@ fdescribe('FormLoaderService', () => {
   it('should save datas', inject([FormLoaderService], (service: FormLoaderService) => {
     expect(service.createForm('test')).toBeTruthy();
     const formModel = new FormInputModel('test', 'text'),
-      stream = service.getForm().subscribe((form: FormInputModel[]) => {
-        expect(form.length).toBe(0);
-        form.push(formModel);
+      stream = service.getForm().subscribe((form: SavedFormInterface) => {
+        expect(form.formModels.length).toBe(0);
+        form.formModels.push(formModel);
       });
     stream.unsubscribe();
     service.saveForm();
-    service.getForm().subscribe((form: FormInputModel[]) => {
-      expect(form.length).toBe(1);
+    service.getForm().subscribe((form: SavedFormInterface) => {
+      expect(form.formModels.length).toBe(1);
       expect(localStorage.getItem('FB_test') === JSON.stringify({
         name: 'test',
         form: [
@@ -95,6 +102,11 @@ fdescribe('FormLoaderService', () => {
         ]
       })).toBeTruthy();
     });
+  }));
+
+  it('should get current form name', inject([FormLoaderService], (service: FormLoaderService) => {
+    expect(service.createForm('test')).toBeTruthy();
+    expect(service.getCurrentFormName()).toBe('test');
   }));
 
 });

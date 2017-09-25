@@ -1,10 +1,34 @@
-
-<section class="container">
-  <h1 class="display-4">Form Builder</h1>
-  <nav class="nav">
+<section>
+  <header class="container">
+    <h1 class="display-4">Form Builder</h1>
+    <fieldset>
+      <label for="formList">Form: </label>
+      <select id="formList" [ngModel]="getCurrentFormName() || ''" (ngModelChange)="onFormChange($event)">
+        <option value="">Select form</option>
+        <option *ngFor="let formName of formListStream | async"
+                [ngValue]="formName">{{formName}}
+        </option>
+      </select>
+      <span class="fa fa-plus-circle" (click)="openCreateFromBox()"></span>
+    </fieldset>
+  </header>
+  <nav class="nav container" >
     <a [routerLink]="'/'" routerLinkActive="nav_item-active"><p class="nav_item">Create</p></a>
     <a routerLink="/preview"><p class="nav_item">Preview</p></a>
     <a routerLink="/export"><p class="nav_item">Export</p></a>
   </nav>
-  <router-outlet></router-outlet>
+</section>
+<router-outlet></router-outlet>
+
+<section id="createFormBox">
+  <form #createForm="ngForm" (submit)="create($event, createForm)">
+    <span class="fa fa-times" (click)="hideCreateFormBox()"></span>
+    <fieldset>
+      <label for="formName">Form name :</label>
+      <input id="formName" ngModel
+             [class.submitted]="createForm.submitted"
+             name="formName" placeholder="Name" required>
+      <button>Create Form</button>
+    </fieldset>
+  </form>
 </section>

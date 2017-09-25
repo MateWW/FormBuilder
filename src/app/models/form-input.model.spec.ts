@@ -44,4 +44,14 @@ describe('FormInputModel', () => {
     expect(model.getChildren()[0].getType()).toBe(FormInputModelMock.children[0].type);
     expect(model.getChildren()[0].getQuestion()).toBe(FormInputModelMock.children[0].question);
   });
+
+  it('should destroy element', () => {
+    const model = new FormInputModel();
+    model.parseJSON(FormInputModelMock);
+    model.destroy();
+    model.setType('test');
+    expect(model.getType()).toBeNull();
+    expect(model.isDestroyed()).toBeTruthy();
+    expect((<any>model).type).toBe(FormInputModelMock.type);
+  });
 });

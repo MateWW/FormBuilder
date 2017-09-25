@@ -4,8 +4,9 @@ import {FormInputInterface} from '../interfaces/form-input.interface';
 export class FormInputModel {
   private condition: ConditionInterface;
   private question: string;
-  private type: string;
+  private type = 'text';
   private children: FormInputModel[] = [];
+  private destroyed = false;
 
   constructor(question?: string, type?: string, condition?: ConditionInterface, children?: FormInputModel[]) {
     this.condition = condition;
@@ -15,34 +16,66 @@ export class FormInputModel {
   }
 
   setCondition(condition: ConditionInterface) {
+    if (this.destroyed) {
+      return null;
+    }
     this.condition = condition;
   }
 
   getCondition() {
+    if (this.destroyed) {
+      return null;
+    }
     return Object.assign({}, this.condition);
   }
 
   setQuestion(question: string) {
+    if (this.destroyed) {
+      return;
+    }
     this.question = question;
   }
 
   getQuestion() {
+    if (this.destroyed) {
+      return null;
+    }
     return this.question;
   }
 
   setType(type: string) {
+    if (this.destroyed) {
+      return;
+    }
     this.type = type;
   }
 
   getType() {
+    if (this.destroyed) {
+      return null;
+    }
     return this.type;
   }
 
   getChildren() {
+    if (this.destroyed) {
+      return null;
+    }
     return this.children.slice();
   }
 
+  destroy() {
+    this.destroyed = true;
+  }
+
+  isDestroyed() {
+    return this.destroyed;
+  }
+
   addChild(child: FormInputModel) {
+    if (this.destroyed) {
+      return;
+    }
     this.children.push(child);
   }
 
@@ -54,8 +87,15 @@ export class FormInputModel {
   }
 
   getJSON(): FormInputInterface {
+    if (this.destroyed) {
+      return null;
+    }
     const tempChildrenJson = [];
-    this.children.forEach((child: FormInputModel) => {
+    this.children.forEach((child: FormInputModel, index: number) => {
+      if (child.isDestroyed()) {
+        this.removeChild(index);
+        return;
+      }
       tempChildrenJson.push(child.getJSON());
     });
     return {
@@ -67,6 +107,9 @@ export class FormInputModel {
   }
 
   parseJSON(json: FormInputInterface) {
+    if (this.destroyed || !json) {
+      return;
+    }
     if (json.condition) {
       this.setCondition({
         type: json.condition.type,

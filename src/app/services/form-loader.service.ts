@@ -16,7 +16,7 @@ export class FormLoaderService {
   private formListStream: Subject<string[]> = new Subject();
 
   private currentForm: SavedFormInterface;
-  private currentFormStream: Subject<FormInputModel[]> = new Subject();
+  private currentFormStream: Subject<SavedFormInterface> = new Subject();
 
   constructor() {
     this.checkLocalStorage();
@@ -31,10 +31,10 @@ export class FormLoaderService {
     if (this.currentForm) {
       this.saveForm();
     }
-
     this.currentForm = this.convertFromJSON({name: name, form: []});
-    this.currentFormStream.next(this.currentForm.formModels);
+    this.currentFormStream.next(this.currentForm);
     this.saveForm();
+    this.loadFormList();
     return true;
   }
 
@@ -43,14 +43,21 @@ export class FormLoaderService {
     if (!this.formList.find((formName: string) => (formName === name))) {
       return false;
     }
-    const formKey = FormLoaderService.prefix + name.join(),
+    const formKey = FormLoaderService.prefix + name.split(' ').join(''),
       form = this.getFormFromLocalStorage(formKey);
     if (this.currentForm) {
       this.saveForm();
     }
     this.currentForm = this.convertFromJSON(form);
-    this.currentFormStream.next(this.currentForm.formModels);
+    this.currentFormStream.next(this.currentForm);
     return true;
+  }
+
+  getCurrentFormName() {
+    if (this.currentForm) {
+      return this.currentForm.name;
+    }
+    return null;
   }
 
   saveForm() {
@@ -63,7 +70,7 @@ export class FormLoaderService {
 
   getForm() {
     if (this.currentForm) {
-      return this.currentFormStream.startWith(this.currentForm.formModels);
+      return this.currentFormStream.startWith(this.currentForm);
     }
     return this.currentFormStream.asObservable();
   }
@@ -96,17 +103,21 @@ export class FormLoaderService {
     if (!this.isExist(key)) {
       return false;
     }
-    const form: SavedFormInterface = JSON.parse(localStorage.getItem(key));
-    if (key.slice(0, 3) !== FormLoaderService.prefix) {
-      return false;
-    } else if (!form) {
-      return false;
-    } else if (form.name.split(' ').join('') !== key.slice(FormLoaderService.prefix.length, key.length)) {
-      return false;
-    } else if (!(form.form instanceof Array)) {
+    try {
+      const form: SavedFormInterface = JSON.parse(localStorage.getItem(key));
+      if (key.slice(0, 3) !== FormLoaderService.prefix) {
+        return false;
+      } else if (!form) {
+        return false;
+      } else if (form.name.split(' ').join('') !== key.slice(FormLoaderService.prefix.length, key.length)) {
+        return false;
+      } else if (!(form.form instanceof Array)) {
+        return false;
+      }
+      return true;
+    } catch (e) {
       return false;
     }
-    return true;
   }
 
   private isExist(key) {
