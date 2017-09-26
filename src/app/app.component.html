@@ -13,9 +13,9 @@
     </fieldset>
   </header>
   <nav class="nav container" >
-    <a [routerLink]="'/'" routerLinkActive="nav_item-active"><p class="nav_item">Create</p></a>
-    <a routerLink="/preview"><p class="nav_item">Preview</p></a>
-    <a routerLink="/export"><p class="nav_item">Export</p></a>
+    <a routerLink="/" routerLinkActive="nav_item-active" [routerLinkActiveOptions]= "{exact: true}"><p class="nav_item">Create</p></a>
+    <a routerLink="/preview" routerLinkActive="nav_item-active"><p class="nav_item">Preview</p></a>
+    <a routerLink="/export" routerLinkActive="nav_item-active"><p class="nav_item">Export</p></a>
   </nav>
 </section>
 <router-outlet></router-outlet>

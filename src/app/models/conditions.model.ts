@@ -5,11 +5,11 @@ function equalsFn(factor: any, value: any) {
 }
 
 function greaterThenFn(factory: number, value: number) {
-  return value > factory;
+  return +value > +factory;
 }
 
 function lessThenFn(factory: number, value: number) {
-  return value < factory;
+  return +value < +factory;
 }
 
 

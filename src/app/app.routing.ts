@@ -3,7 +3,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
-  {path: '' , loadChildren: './core/form-builder/form-builder.module#FormBuilderModule'}
+  {path: '' , loadChildren: './core/form-builder/form-builder.module#FormBuilderModule'},
+  {path: 'preview' , loadChildren: './core/preview/preview.module#PreviewModule'}
 ];
 
 @NgModule({
