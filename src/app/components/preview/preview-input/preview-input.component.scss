@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  width: 100%;
+  max-height: 0;
+  opacity: 0;
+  transition: .5s;
+  &.visible {
+    max-height: 100%;
+    opacity: 1;
+  }
+  fieldset {
+    & > * {
+      width: 100%;
+    }
+  }
+}

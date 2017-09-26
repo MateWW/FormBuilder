@@ -1,0 +1,5 @@
+<section class="container">
+  <form [formGroup]="form" (submit)="onSubmit($event)">
+    <app-preview-input *ngFor="let prevInput of formJSON" [formGroup]="form" [inputJSON]="prevInput" [parentValue]="1"></app-preview-input>
+  </form>
+</section>

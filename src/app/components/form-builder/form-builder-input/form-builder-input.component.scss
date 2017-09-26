@@ -1,7 +1,9 @@
+
 fieldset {
   width: 100%;
   font-weight: 500;
   position: relative;
+  box-sizing: border-box;
   label {
     display: block;
     width: 80px;

@@ -65,6 +65,8 @@ export class FormLoaderService {
       return false;
     }
     const preparedForm = this.convertToJSON(this.currentForm);
+    this.currentForm.form = preparedForm.form;
+    this.currentFormStream.next(this.currentForm);
     return this.saveFormInLocalStorage(preparedForm);
   }
 
@@ -156,7 +158,10 @@ export class FormLoaderService {
   private convertToJSON(form: SavedFormInterface): SavedFormInterface {
     const tempChildren = [];
     form.formModels.forEach((formModel: FormInputModel) => {
-      tempChildren.push(formModel.getJSON());
+      const json = formModel.getJSON();
+      if (json) {
+        tempChildren.push(json);
+      }
     });
     return {name: form.name, form: tempChildren};
   }
