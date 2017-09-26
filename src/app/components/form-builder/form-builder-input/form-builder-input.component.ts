@@ -57,8 +57,8 @@ export class FormBuilderInputComponent implements OnChanges, OnInit, OnDestroy {
   getConditionObject(type: string, value: string): ConditionInterface {
     const condition = this.inputModel.getCondition();
     return {
-      type: type || condition ? condition.type : null,
-      value: value || condition ? condition.value : null
+      type: type || (condition ? condition.type : null),
+      value: value || (condition ? condition.value : null)
     };
   }
 
