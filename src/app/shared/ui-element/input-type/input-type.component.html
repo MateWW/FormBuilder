@@ -1,0 +1,11 @@
+<span [ngSwitch]="type" [formGroup]="formGroup">
+  <select *ngSwitchCase="'boolean'"
+            [formControlName]="controlName">
+    <option [ngValue]="true">Yes</option>
+    <option [ngValue]="false">No</option>
+  </select>
+
+  <input *ngSwitchDefault
+         [attr.type]="type"
+         [formControlName]="controlName">
+</span>

@@ -1,4 +1,4 @@
-import {ConditionsModelInterface} from '../interfaces/conditionsModel.interface';
+import {ConditionsModelInterface} from '../interfaces/conditions-model.interface';
 
 function equalsFn(factor: any, value: any) {
   return factor === value;

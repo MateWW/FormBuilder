@@ -1,6 +1,7 @@
 import {FormInputInterface} from '../../interfaces/form-input.interface';
+import {FormInputModel} from '../../models/form-input.model';
 
-const FormInputModelMock: FormInputInterface = {
+const FormInputMock: FormInputInterface = {
   type: 'boolean',
   question: 'Are you there',
   children: [
@@ -25,4 +26,10 @@ const FormInputModelMock: FormInputInterface = {
   ]
 };
 
-export { FormInputModelMock };
+function GetFormInputModelMock() {
+  const model = new FormInputModel();
+  model.parseJSON(FormInputMock);
+  return model;
+}
+
+export { FormInputMock, GetFormInputModelMock };

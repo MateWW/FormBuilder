@@ -3,7 +3,7 @@
     <h1 class="display-4">Form Builder</h1>
     <fieldset>
       <label for="formList">Form: </label>
-      <select id="formList" [ngModel]="getCurrentFormName() || ''" (ngModelChange)="onFormChange($event)">
+      <select id="formList" (ngModelChange)="onFormChange($event)" [ngModel]="getActiveForm()">
         <option value="">Select form</option>
         <option *ngFor="let formName of formListStream | async"
                 [ngValue]="formName">{{formName}}

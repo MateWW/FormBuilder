@@ -1,0 +1,20 @@
+<section>
+  <header>
+    <div class="container">
+      <h3>{{getFormName()}} <span *ngIf="!getFormName()">No selected Form</span></h3>
+      <form>
+        <button type='button' (click)="addNew()">Add item</button>
+        <button type='button' (click)="save()" [class.disabled]="autoSave">Save</button>
+        <input type="checkbox" id="auto-save" name="auto-save" [(ngModel)]="autoSave"> <label for="auto-save">auto
+        save</label>
+      </form>
+    </div>
+  </header>
+  <form [formGroup]="form" class="container">
+    <app-form-builder-input *ngFor='let formModelElement of formModel; let i = index'
+                            [inputModel]="formModelElement"
+                            [formArray]="form"
+                            (remove)="removeChildren(i)"></app-form-builder-input>
+  </form>
+</section>
+

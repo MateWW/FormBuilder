@@ -27,10 +27,6 @@ export class AppComponent implements OnInit {
     this.formLoader.loadForm(value);
   }
 
-  getCurrentFormName() {
-    return this.formLoader.getCurrentFormName();
-  }
-
   create(event, form: NgForm) {
     event.preventDefault();
     if (form.valid && this.formLoader.createForm(form.value.formName)) {
@@ -45,6 +41,10 @@ export class AppComponent implements OnInit {
         this.formFailedToCreate = true;
       }
     }
+  }
+
+  getActiveForm() {
+    return this.formLoader.getActivatedFormName() || '';
   }
 
   openCreateFromBox() {

@@ -1,0 +1,42 @@
+<fieldset [formGroup]="localForm">
+  <legend>
+    <span>{{nestedId}}</span>
+  </legend>
+
+  <p class="condition" *ngIf="parentType">
+    <label>Condition
+      <app-select-condition-type [controlName]="'conditionType'" [conditionTypes]="getConditionTypes()"
+                                 [formGroup]="localForm"></app-select-condition-type>
+      <app-input-type [controlName]="'conditionValue'" [type]="parentType"
+                      [formGroup]="localForm"></app-input-type>
+    </label>
+  </p>
+
+  <p>
+    <label>Question
+      <input [formControlName]="'question'">
+    </label>
+  </p>
+
+  <p>
+    <label>Type
+      <select [formControlName]="'type'">
+        <option *ngFor="let type of getTypes()" [ngValue]="type">{{ type }}</option>
+      </select>
+    </label>
+  </p>
+
+  <p>
+    <button (click)="addChild()">Add sub-item</button>
+    <button (click)="onRemove()">Remove</button>
+  </p>
+
+</fieldset>
+
+
+<app-form-builder-input *ngFor="let child of inputModel.getChildren(); let i = index"
+                        [formArray]="localFormChildren"
+                        [nestedId]="nestedId+1"
+                        [inputModel]="child"
+                        [parentType]="localForm.value.type"
+                        (remove)="removeChild(i)"></app-form-builder-input>

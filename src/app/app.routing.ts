@@ -1,11 +1,14 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {FormBuilderComponent} from './application/form-builder/form-builder.component';
+import {PreviewComponent} from './application/preview/preview.component';
+import {ExportComponent} from './application/export/export.component';
 
 const routes: Routes = [
-  {path: '' , loadChildren: './core/form-builder/form-builder.module#FormBuilderModule'},
-  {path: 'preview' , loadChildren: './core/preview/preview.module#PreviewModule'},
-  {path: 'export' , loadChildren: './core/export/export.module#ExportModule'},
+  {path: '' , component: FormBuilderComponent},
+  {path: 'preview' , component: PreviewComponent},
+  {path: 'export' , component: ExportComponent}
 ];
 
 @NgModule({

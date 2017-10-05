@@ -1,0 +1,10 @@
+<fieldset [formGroup]="localFormGroup">
+  <label> {{inputJSON.question}}
+    <app-input-type [formGroup]="localFormGroup" [controlName]="'answer'" [type]="inputJSON.type"></app-input-type>
+  </label>
+</fieldset>
+<app-preview-input *ngFor="let inputElem of inputJSON.children"
+                   [parentValue]="localFormGroup.value.answer"
+                   [formGroup]="localFormGroup.controls['children']"
+                   [inputJSON]="inputElem"
+                   [parentType]="inputJSON.type"></app-preview-input>

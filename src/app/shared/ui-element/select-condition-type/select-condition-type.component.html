@@ -1,0 +1,8 @@
+<span [formGroup]="formGroup">
+  <select [formControlName]="controlName">
+    <option *ngFor="let conditionType of getConditionTypes()"
+            [ngValue]="conditionType">
+      {{getConditionName(conditionType)}}
+    </option>
+  </select>
+</span>

@@ -14,7 +14,7 @@ describe('AppComponent', () => {
   const formLoaderMock = {
     createForm: jasmine.createSpy('createForm'),
     loadForm: jasmine.createSpy('loadForm'),
-    getCurrentFormName: jasmine.createSpy('loadForm').and.returnValue('test2'),
+    getActivatedFormName: jasmine.createSpy('loadForm').and.returnValue('test2'),
     getFormList: jasmine.createSpy('getFormList').and.returnValue(Observable.of(FormsListMock))
   };
 
@@ -51,7 +51,7 @@ describe('AppComponent', () => {
   it('should load form list', fakeAsync(() => {
     expect(formLoaderMock.getFormList).toHaveBeenCalled();
 
-    expect(formLoaderMock.getCurrentFormName).toHaveBeenCalled();
+    expect(formLoaderMock.getActivatedFormName).toHaveBeenCalled();
     expect(fixture.debugElement.queryAll(By.css('option')).length).toBe(FormsListMock.length + 1);
   }));
 

@@ -47,10 +47,25 @@ header {
   margin-bottom: 50px;
 }
 
+label, select {
+  font-weight: 500;
+  padding: 5px 20px;
+}
+
 fieldset {
   border: none;
   padding: 0;
   margin: 0;
+  @media only screen and (max-width: 768px){
+    label{
+      padding-left: 0;
+    }
+  }
+  @media only screen and (max-width: 576px){
+    label{
+      padding-left: 20px;
+    }
+  }
 }
 
 .fa-plus-circle {
@@ -66,10 +81,6 @@ fieldset {
   color: #2ecc71;
 }
 
-label, select {
-  font-weight: 500;
-  padding: 5px 20px;
-}
 
 #createFormBox {
   position: fixed;
@@ -136,4 +147,5 @@ label, select {
     box-sizing: border-box;
     text-align: center;
   }
+
 }
