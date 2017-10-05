@@ -1,7 +1,7 @@
 import {FormInputMock} from '../shared/mocks/form-input.mock';
 import {FormLoaderStorage} from './form-loader.storage';
 
-describe("FormLoaderStorage", () => {
+describe('FormLoaderStorage', () => {
   beforeEach(() => {
     localStorage.clear();
   });

@@ -1,0 +1,12 @@
+select {
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+@media only screen and (max-width: 576px) {
+  :host{
+    width: 100%;
+    select{
+      width: 100%;
+    }
+  }
+}

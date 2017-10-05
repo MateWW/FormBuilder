@@ -4,23 +4,30 @@
   </legend>
 
   <p class="condition" *ngIf="parentType">
-    <label>Condition
-      <app-select-condition-type [controlName]="'conditionType'" [conditionTypes]="getConditionTypes()"
-                                 [formGroup]="localForm"></app-select-condition-type>
-      <app-input-type [controlName]="'conditionValue'" [type]="parentType"
-                      [formGroup]="localForm"></app-input-type>
+    <label>
+      <span>Condition</span>
+      <app-select-condition-type [controlName]="'conditionType'"
+                                 [conditionTypes]="getConditionTypes()"
+                                 [formGroup]="localForm"
+                                 class="margin-left"></app-select-condition-type>
+      <app-input-type [controlName]="'conditionValue'"
+                      [type]="parentType"
+                      [formGroup]="localForm"
+                      class="margin-left"></app-input-type>
     </label>
   </p>
 
   <p>
-    <label>Question
-      <input [formControlName]="'question'">
+    <label>
+      <span>Question</span>
+      <input class="margin-left" [formControlName]="'question'">
     </label>
   </p>
 
   <p>
-    <label>Type
-      <select [formControlName]="'type'">
+    <label>
+      <span>Type</span>
+      <select class="margin-left" [formControlName]="'type'">
         <option *ngFor="let type of getTypes()" [ngValue]="type">{{ type }}</option>
       </select>
     </label>
@@ -30,7 +37,6 @@
     <button (click)="addChild()">Add sub-item</button>
     <button (click)="onRemove()">Remove</button>
   </p>
-
 </fieldset>
 
 

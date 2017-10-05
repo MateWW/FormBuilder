@@ -5,8 +5,15 @@ fieldset {
   position: relative;
   box-sizing: border-box;
   label {
-    display: block;
-    width: 80px;
+    display: flex;
+    width: 300px;
+    align-items: center;
+    span {
+      width: 80px
+    }
+    .margin-left {
+      margin-left: 10px;
+    }
   }
   legend {
     position: absolute;
@@ -28,8 +35,7 @@ fieldset {
     }
   }
   p {
-    display: flex;
-    align-items: center;
+    display: block;
   }
   input, select {
     padding: 5px 10px;
@@ -57,18 +63,21 @@ fieldset {
 @media only screen and (max-width: 576px) {
   fieldset {
     box-sizing: border-box;
-    p {
+    label {
       flex-wrap: wrap;
-      & > * {
-        width: 100%;
-        display: block;
+      width: 100%;
+      .margin-left {
+        margin-left: 0;
       }
-      span > * {
+      input, select, span {
         box-sizing: border-box;
         width: 100%;
       }
     }
-    button:last-of-type{
+    button {
+      width: 100%;
+    }
+    button:last-of-type {
       margin-left: 0;
       margin-top: 10px;
     }
