@@ -8,7 +8,7 @@ const FormInputMock: FormInputInterface = {
     {
       condition: {
         type: 'equals',
-        value: 'true'
+        value: true
       },
       type: 'text',
       question: 'Whats your name?',
@@ -17,7 +17,7 @@ const FormInputMock: FormInputInterface = {
     {
       condition: {
         type: 'equals',
-        value: 'false'
+        value: false
       },
       type: 'text',
       question: 'Okey?',

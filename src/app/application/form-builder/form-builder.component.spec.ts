@@ -1,12 +1,14 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {FormBuilderComponent} from './form-builder.component';
-import {FormGroup, FormsModule} from '@angular/forms';
+import {FormArray, FormControl, ReactiveFormsModule} from '@angular/forms';
 import {Component, Input} from '@angular/core';
 import {FormInputModel} from '../../models/form-input.model';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import {FormLoaderService} from '../../services/form-loader.service';
+import {GetFormInputModelMock} from '../../shared/mocks/form-input.mock';
+
 @Component({
   selector: 'app-form-builder-input',
   template: ''
@@ -14,8 +16,9 @@ import {FormLoaderService} from '../../services/form-loader.service';
 class FormBuilderInputMockComponent {
   @Input() parentType;
   @Input() inputModel: FormInputModel;
-  @Input() form: FormGroup;
+  @Input() formArray: FormArray;
   @Input() nestedId = 0;
+
 }
 
 describe('FormBuilderComponent', () => {
@@ -24,12 +27,14 @@ describe('FormBuilderComponent', () => {
 
   const FormLoaderServiceMock = {
     saveForm: jasmine.createSpy('saveForm'),
-    getForm: jasmine.createSpy('getForm').and.returnValue(Observable.of([]))
+    getForm: jasmine.createSpy('getForm').and.returnValue(Observable.of([GetFormInputModelMock()])),
+    getActivatedFormName: jasmine.createSpy('getActivatedFormName').and.returnValue('test'),
+    updateForm: jasmine.createSpy('updateForm').and.returnValue(true)
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        FormsModule
+        ReactiveFormsModule
       ],
       declarations: [FormBuilderComponent, FormBuilderInputMockComponent],
       providers: [
@@ -47,12 +52,8 @@ describe('FormBuilderComponent', () => {
   });
 
   it('should get form', () => {
-    expect(component.formModel).toBe([]);
+    expect(component.formModel.length).toBe(1);
     expect(FormLoaderServiceMock.getForm).toHaveBeenCalledTimes(1);
-  });
-
-  it('should be created', () => {
-    expect(component).toBeTruthy();
   });
 
   it('should save', () => {
@@ -66,14 +67,22 @@ describe('FormBuilderComponent', () => {
     expect(component.formModel.length).toBe(2);
   });
 
-  // it('should auto save', fakeAsync(() => {
-  //   FormLoaderServiceMock.saveForm.calls.reset();
-  //   component.ngAfterViewInit();
-  //   component.autoSave = true;
-  //   component.form.valueChanges.next('test');
-  //   tick(300);
-  //   expect(FormLoaderServiceMock.saveForm).toHaveBeenCalledTimes(2);
-  // }));
+  it('should auto save', fakeAsync(() => {
+    FormLoaderServiceMock.saveForm.calls.reset();
+    const mockControl = new FormControl();
+    component.autoSave = true;
+    component.ngAfterViewInit();
+    component.form.push(mockControl);
+    fixture.detectChanges();
+    tick(300);
+    expect(FormLoaderServiceMock.saveForm).toHaveBeenCalledTimes(2);
+  }));
 
+  it('should update form', fakeAsync(() => {
+    FormLoaderServiceMock.updateForm.calls.reset();
+    component.addNew();
+    tick( 300);
+    expect(FormLoaderServiceMock.updateForm).toHaveBeenCalledTimes(1);
+  }));
 
 });

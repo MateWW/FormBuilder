@@ -52,7 +52,7 @@ label, select {
   padding: 5px 20px;
 }
 
-fieldset {
+fieldset.select_form {
   border: none;
   padding: 0;
   margin: 0;
@@ -104,7 +104,7 @@ fieldset {
       padding: 20px;
       font-family: Roboto, sans-serif;
       margin: 0;
-      & > * {
+      & > label, input, button {
         font-weight: 500;
         width: 100%;
         padding: 10px 20px;

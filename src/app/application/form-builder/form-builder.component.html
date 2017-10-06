@@ -2,12 +2,12 @@
   <header>
     <div class="container">
       <h3>{{getFormName()}} <span *ngIf="!getFormName()">No selected Form</span></h3>
-      <form>
+      <div>
         <button type='button' (click)="addNew()">Add item</button>
         <button type='button' (click)="save()" [class.disabled]="autoSave">Save</button>
-        <input type="checkbox" id="auto-save" name="auto-save" [(ngModel)]="autoSave"> <label for="auto-save">auto
+        <input type="checkbox" id="auto-save" name="auto-save" (change)="changeAutoSave()"> <label for="auto-save">auto
         save</label>
-      </form>
+      </div>
     </div>
   </header>
   <form [formGroup]="form" class="container">

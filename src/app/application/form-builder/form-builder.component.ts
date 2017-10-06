@@ -61,4 +61,9 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
   getFormName() {
     return this.formLoader.getActivatedFormName();
   }
+
+  changeAutoSave() {
+    this.autoSave = !this.autoSave;
+    this.save();
+  }
 }

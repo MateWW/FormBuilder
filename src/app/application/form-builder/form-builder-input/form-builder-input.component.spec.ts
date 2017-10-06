@@ -1,7 +1,7 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {FormBuilderInputComponent} from './form-builder-input.component';
-import {FormArray, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {FormInputModel} from '../../../models/form-input.model';
 import {FormInputMock} from '../../../shared/mocks/form-input.mock';
 import {Component, Input} from '@angular/core';
@@ -35,7 +35,6 @@ describe('FormBuilderInputComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        FormsModule,
         ReactiveFormsModule
       ],
       declarations: [

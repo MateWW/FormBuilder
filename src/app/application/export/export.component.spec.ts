@@ -4,13 +4,14 @@ import { ExportComponent } from './export.component';
 import {Observable} from 'rxjs/Observable';
 import {FormLoaderService} from '../../services/form-loader.service';
 import {FormInputMock} from '../../shared/mocks/form-input.mock';
+import {By} from '@angular/platform-browser';
 
 describe('ExportComponent', () => {
   let component: ExportComponent;
   let fixture: ComponentFixture<ExportComponent>;
 
   const FormLoaderServiceMock = {
-    getFormJSON: jasmine.createSpy('getForm').and.returnValue(Observable.of([FormInputMock]))
+    getFormJSON: jasmine.createSpy('getFormJSON').and.returnValue(Observable.of([FormInputMock]))
   };
 
   beforeEach(async(() => {
@@ -31,5 +32,10 @@ describe('ExportComponent', () => {
 
   it('should be created', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load json to textarea', () => {
+    const text = fixture.debugElement.query(By.css('textarea')).nativeElement.value;
+    expect(text).toBe(JSON.stringify([FormInputMock]));
   });
 });
